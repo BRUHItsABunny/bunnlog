@@ -28,107 +28,107 @@ func (b *BunnyLog) SetOutputFileAndTerminal(file *os.File) {
 	b.Logger.SetOutput(wrt)
 }
 
-func (b *BunnyLog) Debug(msg interface{}) {
+func (b *BunnyLog) Debug(msg ...interface{}) {
 	if b.Verbosity <= VerbosityDEBUG && msg != nil {
 		b.Logger.SetPrefix("[DEBUG]:\t")
-		b.Logger.Print(msg)
+		b.Logger.Print(msg...)
 	}
 }
 
-func (b *BunnyLog) Debugln(msg interface{}) {
+func (b *BunnyLog) Debugln(msg ...interface{}) {
 	if b.Verbosity <= VerbosityDEBUG && msg != nil {
 		b.Logger.SetPrefix("[DEBUG]:\t")
-		b.Logger.Println(msg)
+		b.Logger.Println(msg...)
 	}
 }
 
-func (b *BunnyLog) Debugf(format string, v interface{}) {
+func (b *BunnyLog) Debugf(format string, v ...interface{}) {
 	if b.Verbosity <= VerbosityDEBUG {
 		b.Logger.SetPrefix("[DEBUG]:\t")
-		b.Logger.Printf(format, v)
+		b.Logger.Printf(format, v...)
 	}
 }
 
-func (b *BunnyLog) Info(msg interface{}) {
+func (b *BunnyLog) Info(msg ...interface{}) {
 	if b.Verbosity <= VerbosityINFO && msg != nil {
 		b.Logger.SetPrefix("[INFO]:\t")
-		b.Logger.Print(msg)
+		b.Logger.Print(msg...)
 	}
 }
 
-func (b *BunnyLog) Infoln(msg interface{}) {
+func (b *BunnyLog) Infoln(msg ...interface{}) {
 	if b.Verbosity <= VerbosityINFO && msg != nil {
 		b.Logger.SetPrefix("[INFO]:\t")
-		b.Logger.Println(msg)
+		b.Logger.Println(msg...)
 	}
 }
 
-func (b *BunnyLog) Infof(format string, v interface{}) {
+func (b *BunnyLog) Infof(format string, v ...interface{}) {
 	if b.Verbosity <= VerbosityINFO {
 		b.Logger.SetPrefix("[INFO]:\t")
-		b.Logger.Printf(format, v)
+		b.Logger.Printf(format, v...)
 	}
 }
 
-func (b *BunnyLog) Warn(msg interface{}) {
+func (b *BunnyLog) Warn(msg ...interface{}) {
 	if b.Verbosity <= VerbosityWARNING && msg != nil {
 		b.Logger.SetPrefix("[WARNING]:\t")
-		b.Logger.Print(msg)
+		b.Logger.Print(msg...)
 	}
 }
 
-func (b *BunnyLog) Warnln(msg interface{}) {
+func (b *BunnyLog) Warnln(msg ...interface{}) {
 	if b.Verbosity <= VerbosityWARNING && msg != nil {
 		b.Logger.SetPrefix("[WARNING]:\t")
-		b.Logger.Println(msg)
+		b.Logger.Println(msg...)
 	}
 }
 
-func (b *BunnyLog) Warnf(format string, v interface{}) {
+func (b *BunnyLog) Warnf(format string, v ...interface{}) {
 	if b.Verbosity <= VerbosityWARNING {
 		b.Logger.SetPrefix("[WARNING]:\t")
-		b.Logger.Printf(format, v)
+		b.Logger.Printf(format, v...)
 	}
 }
 
-func (b *BunnyLog) Error(msg interface{}) {
+func (b *BunnyLog) Error(msg ...interface{}) {
 	if b.Verbosity <= VerbosityERROR && msg != nil {
 		b.Logger.SetPrefix("[ERROR]:\t")
-		b.Logger.Print(msg)
+		b.Logger.Print(msg...)
 	}
 }
 
-func (b *BunnyLog) Errorln(msg interface{}) {
+func (b *BunnyLog) Errorln(msg ...interface{}) {
 	if b.Verbosity <= VerbosityERROR && msg != nil {
 		b.Logger.SetPrefix("[ERROR]:\t")
-		b.Logger.Println(msg)
+		b.Logger.Println(msg...)
 	}
 }
 
-func (b *BunnyLog) Errorf(format string, v interface{}) {
+func (b *BunnyLog) Errorf(format string, v ...interface{}) {
 	if b.Verbosity <= VerbosityERROR {
 		b.Logger.SetPrefix("[ERROR]:\t")
-		b.Logger.Printf(format, v)
+		b.Logger.Printf(format, v...)
 	}
 }
 
-func (b *BunnyLog) Fatal(msg interface{}) {
+func (b *BunnyLog) Fatal(msg ...interface{}) {
 	if b.Verbosity <= VerbosityERROR && msg != nil {
 		b.Logger.SetPrefix("[FATAL]:\t")
-		b.Logger.Fatal(msg)
+		b.Logger.Fatal(msg...)
 	}
 }
 
-func (b *BunnyLog) Fatalln(msg interface{}) {
+func (b *BunnyLog) Fatalln(msg ...interface{}) {
 	if b.Verbosity <= VerbosityERROR && msg != nil {
 		b.Logger.SetPrefix("[FATAL]:\t")
-		b.Logger.Fatalln(msg)
+		b.Logger.Fatalln(msg...)
 	}
 }
 
-func (b *BunnyLog) Fatalf(format string, v interface{}) {
+func (b *BunnyLog) Fatalf(format string, v ...interface{}) {
 	if b.Verbosity <= VerbosityERROR {
 		b.Logger.SetPrefix("[FATAL]:\t")
-		b.Logger.Fatalf(format, v)
+		b.Logger.Fatalf(format, v...)
 	}
 }
