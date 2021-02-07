@@ -7,4 +7,5 @@ type BunnyLog struct {
 	Verbosity    int
 	StackOnErr   bool
 	StackOnFatal bool
+	FullInfo     bool
 }

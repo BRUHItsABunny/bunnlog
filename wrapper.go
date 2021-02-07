@@ -1,6 +1,7 @@
 package bunnlog
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -8,9 +9,9 @@ import (
 	"runtime"
 )
 
-func GetBunnLog(printStacks bool, verbosity, flag int) BunnyLog {
+func GetBunnLog(printStacks, fullInfo bool, verbosity, flag int) BunnyLog {
 	// Manually set stackOnErr for less confusion
-	return BunnyLog{Logger: log.New(ioutil.Discard, "", flag), Verbosity: verbosity, StackOnErr: false, StackOnFatal: printStacks}
+	return BunnyLog{Logger: log.New(ioutil.Discard, "", flag), Verbosity: verbosity, StackOnErr: false, StackOnFatal: printStacks, FullInfo: fullInfo}
 }
 
 func (b *BunnyLog) SetVerbosity(verbosity int) {
@@ -23,6 +24,10 @@ func (b *BunnyLog) SetPrintStacksOnError(value bool) {
 
 func (b *BunnyLog) SetPrintStacksOnFatal(value bool) {
 	b.StackOnFatal = value
+}
+
+func (b *BunnyLog) SetFullInfo(value bool) {
+	b.FullInfo = value
 }
 
 func (b *BunnyLog) SetOutputFile(file *os.File) {
@@ -107,6 +112,9 @@ func (b *BunnyLog) Error(msg ...interface{}) {
 		if b.StackOnErr {
 			b.Logger.Print(b.StackTrace())
 		}
+		if b.FullInfo {
+			b.Logger.Println(b.CallerInfo())
+		}
 		b.Logger.Print(msg...)
 	}
 }
@@ -116,6 +124,9 @@ func (b *BunnyLog) Errorln(msg ...interface{}) {
 		b.Logger.SetPrefix("[ERROR]:\t")
 		if b.StackOnErr {
 			b.Logger.Println(b.StackTrace())
+		}
+		if b.FullInfo {
+			b.Logger.Println(b.CallerInfo())
 		}
 		b.Logger.Println(msg...)
 	}
@@ -127,6 +138,9 @@ func (b *BunnyLog) Errorf(format string, v ...interface{}) {
 		if b.StackOnErr {
 			b.Logger.Print(b.StackTrace())
 		}
+		if b.FullInfo {
+			b.Logger.Println(b.CallerInfo())
+		}
 		b.Logger.Printf(format, v...)
 	}
 }
@@ -136,6 +150,9 @@ func (b *BunnyLog) Fatal(msg ...interface{}) {
 		b.Logger.SetPrefix("[FATAL]:\t")
 		if b.StackOnFatal {
 			b.Logger.Print(b.StackTrace())
+		}
+		if b.FullInfo {
+			b.Logger.Println(b.CallerInfo())
 		}
 		b.Logger.Fatal(msg...)
 	}
@@ -147,6 +164,9 @@ func (b *BunnyLog) Fatalln(msg ...interface{}) {
 		if b.StackOnFatal {
 			b.Logger.Println(b.StackTrace())
 		}
+		if b.FullInfo {
+			b.Logger.Println(b.CallerInfo())
+		}
 		b.Logger.Fatalln(msg...)
 	}
 }
@@ -157,6 +177,9 @@ func (b *BunnyLog) Fatalf(format string, v ...interface{}) {
 		if b.StackOnFatal {
 			b.Logger.Print(b.StackTrace())
 		}
+		if b.FullInfo {
+			b.Logger.Println(b.CallerInfo())
+		}
 		b.Logger.Fatalf(format, v...)
 	}
 }
@@ -165,4 +188,9 @@ func (b *BunnyLog) StackTrace() string {
 	buf := make([]byte, 2048)
 	n := runtime.Stack(buf, false)
 	return string(buf[:n])
+}
+
+func (b *BunnyLog) CallerInfo() string {
+	pc, fileName, line, _ := runtime.Caller(1)
+	return fmt.Sprintf("%s[%s:%d]:", runtime.FuncForPC(pc).Name(), fileName, line)
 }
